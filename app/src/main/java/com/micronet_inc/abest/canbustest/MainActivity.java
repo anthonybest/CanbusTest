@@ -8,13 +8,17 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 
 public class MainActivity extends ActionBarActivity {
 
+
+    private CanTest canTest;
 
     private void getScreenRes()
     {
@@ -67,11 +71,67 @@ public class MainActivity extends ActionBarActivity {
             text.scrollTo(0,0);*/
     }
 
+    static int interval = 0;
+    private void updateCounts()
+    {
+        //static int interval = 0;
+        TextView textView = (TextView) findViewById(R.id.textView);
+        interval++;
+        String s = "J1939 Frames/Bytes:" + canTest.getCanbusFrameCount() + "/" + canTest.getCanbusByteCount() + "\n"
+                + " Rollovers/MaxDiff: " + canTest.getCanbusRollovers() + "/" + canTest.getCanbusMaxdiff() + "\n"
+                + "J1708 Frames/Bytes:" + canTest.getJ1939FrameCount() + "/" + canTest.getJ1939ByteCount() + "\n";
+
+        textView.setText(s);
+
+    }
+
+    private void startTimerThread()
+    {
+        Thread th = new Thread(new Runnable() {
+
+            //private long startTime = System.currentTimeMillis();
+
+            @Override
+            public void run() {
+                while(true) {
+                    //System.out.println("tick");
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            updateCounts();
+                        }
+                    });
+                    try {
+                        Thread.sleep(100);
+                    }
+                    catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
+        th.start();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getScreenRes();
+        //getScreenRes();
+
+        canTest = new CanTest();
+        canTest.CreateInterface();
+
+        startTimerThread();
+
+        final Button test1Button = (Button) findViewById(R.id.test1);
+        test1Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                canTest.runCanTest1();
+            }
+        });
     }
 
     @Override
