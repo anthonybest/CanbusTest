@@ -132,6 +132,14 @@ public class MainActivity extends ActionBarActivity {
                 canTest.runCanTest1();
             }
         });
+
+        final Button testJ1708 = (Button) findViewById(R.id.j1708_test_1);
+        testJ1708.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                canTest.runJ1708Test1();
+            }
+        });
     }
 
     @Override

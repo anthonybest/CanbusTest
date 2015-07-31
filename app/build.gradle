@@ -24,6 +24,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.0'
-    compile files('classes-full-debug.jar')
-    compile files('libs/classes-full-debug.jar')
+    //provided files('libsprovided/classes.jar')
+    compile files('libsprovided/classes.jar')
 }

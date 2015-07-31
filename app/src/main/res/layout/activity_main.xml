@@ -39,14 +39,14 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Test1"
+                android:text="CAN Test 1"
                 android:id="@+id/test1" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New Button"
-                android:id="@+id/button2" />
+                android:text="J1708 Test 1"
+                android:id="@+id/j1708_test_1" />
         </LinearLayout>
 
     </LinearLayout>
