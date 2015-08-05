@@ -77,9 +77,16 @@ public class MainActivity extends ActionBarActivity {
         //static int interval = 0;
         TextView textView = (TextView) findViewById(R.id.textView);
         interval++;
+
+
+
+
         String s = "J1939 Frames/Bytes:" + canTest.getCanbusFrameCount() + "/" + canTest.getCanbusByteCount() + "\n"
-                + " Rollovers/MaxDiff: " + canTest.getCanbusRollovers() + "/" + canTest.getCanbusMaxdiff() + "\n"
-                + "J1708 Frames/Bytes:" + canTest.getJ1939FrameCount() + "/" + canTest.getJ1939ByteCount() + "\n";
+                + " Rollovers/MaxDiff: " + canTest.getCanbusRollovers() + "/" + canTest.getCanbusMaxdiff() + "\n";
+
+        if(canTest.isJ1708Supported()) {
+            s += "J1708 Frames/Bytes:" + canTest.getJ1939FrameCount() + "/" + canTest.getJ1939ByteCount() + "\n";
+        }
 
         textView.setText(s);
 
@@ -134,12 +141,18 @@ public class MainActivity extends ActionBarActivity {
         });
 
         final Button testJ1708 = (Button) findViewById(R.id.j1708_test_1);
-        testJ1708.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                canTest.runJ1708Test1();
-            }
-        });
+
+        if(canTest.isJ1708Supported()) {
+            testJ1708.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    canTest.runJ1708Test1();
+                }
+            });
+        }
+        else {
+            testJ1708.setEnabled(false);
+        }
     }
 
     @Override

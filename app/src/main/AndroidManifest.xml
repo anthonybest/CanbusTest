@@ -18,5 +18,6 @@
         </activity>
         <!-- <uses-library android:name="canbus_api_qbridge" /> -->
     </application>
+    <uses-permission android:name="android.permission.NET_CANBUS" />
 
 </manifest>

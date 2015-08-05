@@ -9,7 +9,6 @@ import com.micronet.canbus.J1708Frame;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by abest on 7/28/15.
@@ -24,6 +23,11 @@ public class CanTest {
 
     }
 
+    public boolean isJ1708Supported()
+    {
+        return canbusInterface.isJ1708Supported();
+    }
+
 
 
     /// Canbus Reader Thread
@@ -34,6 +38,7 @@ public class CanTest {
         private volatile int canbusByteCount = 0;
         private volatile int rollovers = 0;
         private volatile int maxdiff = 0;
+
 
         public int getCanbusFrameCount() {
             return canbusFrameCount;
@@ -112,6 +117,7 @@ public class CanTest {
     }
     /// End
 
+
     /// J1708 Reader Thread
     private class J1708Reader implements Runnable
     {
@@ -160,9 +166,11 @@ public class CanTest {
         canbusReaderThread = new Thread(canbusReader);
         canbusReaderThread.start();
 
-        j1708Reader = new J1708Reader();
-        j1708ReaderThread = new Thread(j1708Reader);
-        j1708ReaderThread.start();
+        if(canbusInterface.isJ1708Supported()) {
+            j1708Reader = new J1708Reader();
+            j1708ReaderThread = new Thread(j1708Reader);
+            j1708ReaderThread.start();
+        }
     }
 
     public void CreateInterface()
@@ -205,32 +213,34 @@ public class CanTest {
 
     public void runJ1708Test1()
     {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int i = 0;
-                byte[] arr = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
+        if(canbusInterface.isJ1708Supported()) {
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    int i = 0;
+                    byte[] arr = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
 
-                //ByteBuffer dbuf = ByteBuffer.allocate(8);
-                //dbuf.putInt(i);
+                    //ByteBuffer dbuf = ByteBuffer.allocate(8);
+                    //dbuf.putInt(i);
 
-                for(i = 0; i < 100000; ++i)
-                {
-                    ByteBuffer dbuf = ByteBuffer.allocate(8);
-                    dbuf.order(ByteOrder.LITTLE_ENDIAN);
-                    dbuf.putInt(i);
-                    byte[] a = dbuf.array();
-                    J1708Frame frame = new J1708Frame(8, 111, a);
-                    canbusSocket.writeJ1708(frame);
-                    try {
-                        Thread.sleep(1);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                    for (i = 0; i < 100000; ++i) {
+                        ByteBuffer dbuf = ByteBuffer.allocate(8);
+                        dbuf.order(ByteOrder.LITTLE_ENDIAN);
+                        dbuf.putInt(i);
+                        byte[] a = dbuf.array();
+                        J1708Frame frame = new J1708Frame(8, 111, a);
+                        canbusSocket.writeJ1708(frame);
+                        try {
+                            Thread.sleep(1);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
-            }
-        });
-        thread.start();
+            });
+            thread.start();
+        }
     }
+
 
 }
