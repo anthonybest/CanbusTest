@@ -26,4 +26,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
     //provided files('libsprovided/classes.jar')
     //compile files('libsprovided/classes.jar')
+    compile files('libs/canbus_api.jar')
 }
