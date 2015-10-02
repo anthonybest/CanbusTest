@@ -202,7 +202,7 @@ public class CanTest {
                 //ByteBuffer dbuf = ByteBuffer.allocate(8);
                 //dbuf.putInt(i);
 
-                for(i = 0; i < 100000; ++i)
+                for(i = 0; i < 10; ++i)
                 {
                     ByteBuffer dbuf = ByteBuffer.allocate(8);
                     dbuf.order(ByteOrder.LITTLE_ENDIAN);
@@ -229,7 +229,7 @@ public class CanTest {
                     //ByteBuffer dbuf = ByteBuffer.allocate(8);
                     //dbuf.putInt(i);
 
-                    for (i = 0; i < 100000; ++i) {
+                    for (i = 0; i < 10; ++i) {
                         ByteBuffer dbuf = ByteBuffer.allocate(8);
                         dbuf.order(ByteOrder.LITTLE_ENDIAN);
                         dbuf.putInt(i);
