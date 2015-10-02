@@ -84,11 +84,10 @@ public class MainActivity extends ActionBarActivity {
         String s = "J1939 Frames/Bytes:" + canTest.getCanbusFrameCount() + "/" + canTest.getCanbusByteCount() + "\n"
                 + " Rollovers/MaxDiff: " + canTest.getCanbusRollovers() + "/" + canTest.getCanbusMaxdiff() + "\n";
 
-        /* for J1708 library
+        /* for J1708 library */
         if(canTest.isJ1708Supported()) {
             s += "J1708 Frames/Bytes:" + canTest.getJ1939FrameCount() + "/" + canTest.getJ1939ByteCount() + "\n";
         }
-        */
 
         textView.setText(s);
 
@@ -144,7 +143,7 @@ public class MainActivity extends ActionBarActivity {
 
         final Button testJ1708 = (Button) findViewById(R.id.j1708_test_1);
 
-        /* for J1708 library
+        /* for J1708 library */
         if(canTest.isJ1708Supported()) {
             testJ1708.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -153,7 +152,7 @@ public class MainActivity extends ActionBarActivity {
                 }
             });
         }
-        else */{
+        else {
             testJ1708.setEnabled(false);
         }
     }

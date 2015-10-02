@@ -23,13 +23,11 @@ public class CanTest {
 
     }
 
-    /* For J1708 version of library
+    /* For J1708 version of library */
     public boolean isJ1708Supported()
     {
         return canbusInterface.isJ1708Supported();
     }
-    */
-
 
 
     /// Canbus Reader Thread
@@ -120,7 +118,7 @@ public class CanTest {
     /// End
 
 
-    /* J1708 Library
+    // J1708 Library
     /// J1708 Reader Thread
     private class J1708Reader implements Runnable
     {
@@ -162,7 +160,7 @@ public class CanTest {
     public int getJ1939ByteCount() {
         return j1708Reader.getJ1708ByteCount();
     }
-    */
+
 
     //////
 
@@ -171,13 +169,13 @@ public class CanTest {
         canbusReaderThread = new Thread(canbusReader);
         canbusReaderThread.start();
 
-        /* For J1708 version of library
+        // For J1708 version of library
         if(canbusInterface.isJ1708Supported()) {
             j1708Reader = new J1708Reader();
             j1708ReaderThread = new Thread(j1708Reader);
             j1708ReaderThread.start();
         }
-        */
+
     }
 
     public void CreateInterface()
@@ -218,7 +216,7 @@ public class CanTest {
     }
 
 
-    /* for J1708 version of library
+    // for J1708 version of library
     public void runJ1708Test1()
     {
         if(canbusInterface.isJ1708Supported()) {
@@ -249,7 +247,6 @@ public class CanTest {
             thread.start();
         }
     }
-    */
 
 
 }
